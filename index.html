@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍎果物虫食いゲーム🐝</title>
+    <title>🍎くだもの虫食いゲーム🐝</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
     <div class="game-container">
         <div class="game-header">
-            <h1>🍎果物虫食いゲーム🐝</h1>
+            <h1>🍎くだもの虫食いゲーム🐝</h1>
             <div class="game-info">
                 <div class="score">スコア: <span id="score">0</span></div>
                 <div class="combo">コンボ: <span id="combo">0</span></div>
@@ -29,9 +29,35 @@
             
             <div class="qr-section">
                 <h3>スマホで参加</h3>
-                <div id="qrCode" class="qr-code">
-                    <p>QRコードを表示中...</p>
-                </div>
+                <div class="qr-section">
+  <h3>スマホで参加</h3>
+  <div id="qrCode" class="qr-code">
+    <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
+    <a id="qr-link" href="#" style="display:block;margin-top:8px;font-size:14px;word-break:break-all"></a>
+  </div>
+  <p class="qr-instruction">スマホでQRコードを読み取って参加しよう！</p>
+</div>
+
+<!-- QR生成ライブラリ（CDN） -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  // 現在のURL + /controller に自動追従
+  const url = window.location.origin + "/controller";
+
+  // QRコード描画
+  const canvas = document.getElementById("qr");
+  QRCode.toCanvas(canvas, url, { width: 240, margin: 1 }, (err) => {
+    if (err) console.error(err);
+  });
+
+  // 文字リンクも表示（QR読み取り失敗時の保険）
+  const link = document.getElementById("qr-link");
+  link.textContent = url;
+  link.href = url;
+</script>
+
+
+                
                 <p class="qr-instruction">スマホでQRコードを読み取って参加しよう！</p>
             </div>
         </div>
