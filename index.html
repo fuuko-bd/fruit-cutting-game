@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍎くだもの虫食いゲーム🐝 [DEBUG 123]</title>
-    <div style="background:#ff0;padding:4px 8px;margin:8px 0;font-weight:bold">
-  DEBUG 123 — この帯が見えたら index.html が配信されています
+    <title>🍎くだもの虫食いゲーム🐝</title>
 </div>
     <link rel="stylesheet" href="style.css">
    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
@@ -56,28 +54,24 @@
         </div>
     </div>
     
-    <script src="game.js"></script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
+<script src="game.js"></script> <!-- ← 先にゲーム本体 -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
   (function () {
-    // 今アクセスしているドメインを自動取得
-    const newUrl = window.location.origin + "/controller";
-
-    // QRコードを入れる箱
+    const url = window.location.origin + "/controller";
     const box = document.getElementById("qrCode");
     if (box) {
       box.innerHTML = `
         <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
-        <a href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
+        <a id="qr-link" href="${url}" style="display:block;margin-top:8px;word-break:break-all">${url}</a>
       `;
-      // QRコード生成
-      QRCode.toCanvas(document.getElementById("qr"), newUrl, {
-        width: 240,
-        margin: 1
-      });
+      QRCode.toCanvas(document.getElementById("qr"), url, { width: 240, margin: 1 });
     }
+    // 念のため、古いリンクがあれば全置換
+    document.querySelectorAll('a').forEach(a=>{
+      if (a.href && a.href.includes('trycloudflare.com')) { a.href=url; a.textContent=url; }
+    });
   })();
 </script>
     
