@@ -90,5 +90,33 @@
     </div>
     
     <script src="game.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  // ここで最終的に“全部”上書きする（他の古いコードの影響を打ち消す）
+  const newUrl = window.location.origin + "/controller";
+
+  // QRエリアをまるっと作り直す
+  const box = document.getElementById("qrCode");
+  if (box) {
+    box.innerHTML = `
+      <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
+      <a id="qr-link" href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
+    `;
+    const canvas = document.getElementById("qr");
+    QRCode.toCanvas(canvas, newUrl, { width: 240, margin: 1 }, (err) => err && console.error(err));
+  }
+
+  // 既存のaタグに古いURLが残っていたら強制置換
+  document.querySelectorAll('a').forEach(a => {
+    if (a.href && a.href.includes('trycloudflare.com')) {
+      a.href = newUrl;
+      a.textContent = newUrl;
+    }
+  });
+</script>
+
+
+    
 </body>
 </html> 
