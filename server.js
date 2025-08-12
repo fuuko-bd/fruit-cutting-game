@@ -4,13 +4,17 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+  cors: { origin: '*' },
+  transports: ['websocket','polling'],
+});
 
 // 直下のファイル群をそのまま配信（publicフォルダ不要）
 app.use(express.static(__dirname));
 
 // ヘルスチェック（Cursorのぐるぐる対策）
 app.get('/health', (_req, res) => res.json({ ok: true }));
+app.get('/healthz', (_req, res) => res.json({ ok: true }));
 
 // ショートURL
 app.get('/projector', (_req, res) =>
