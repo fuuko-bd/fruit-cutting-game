@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎果物虫食いゲーム🐝</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🍎果物虫食いゲーム🐝</h1>
+            <div class="game-info">
+                <div class="score">スコア: <span id="score">0</span></div>
+                <div class="combo">コンボ: <span id="combo">0</span></div>
+                <div class="time">時間: <span id="timeLeft">60</span></div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <canvas id="gameCanvas" width="1200" height="800"></canvas>
+            
+            <div class="game-controls">
+                <button id="startBtn" class="btn btn-primary">ゲーム開始</button>
+                <button id="pauseBtn" class="btn btn-secondary" disabled>一時停止</button>
+                <button id="resetBtn" class="btn btn-danger">リセット</button>
+            </div>
+            
+            <div class="qr-section">
+                <h3>スマホで参加</h3>
+                <div id="qrCode" class="qr-code">
+                    <p>QRコードを表示中...</p>
+                </div>
+                <p class="qr-instruction">スマホでQRコードを読み取って参加しよう！</p>
+            </div>
+        </div>
+        
+        <div id="gameOver" class="game-over hidden">
+            <div class="game-over-content">
+                <h2>ゲーム終了！</h2>
+                <p>最終スコア: <span id="finalScore">0</span></p>
+                <p>最大コンボ: <span id="finalCombo">0</span></p>
+                <div id="finalRanking" style="text-align:left; margin-top:16px;"></div>
+                <button id="restartBtn" class="btn btn-primary" style="margin-top:16px;">もう一度プレイ</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html> 

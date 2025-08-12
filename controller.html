@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>果物斬りコントローラー - タッチパッド版</title>
+    <link rel="stylesheet" href="controller-style.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="controller-container">
+        <div class="controller-header">
+            <h1>🐛 果物むしくいゲーム 🐝</h1>
+            <div class="connection-status">
+                <span id="status">接続中...</span>
+            </div>
+            <div class="name-form">
+                <input id="nameInput" type="text" placeholder="名前を入力 (例: 太郎)" maxlength="24" />
+                <button id="saveNameBtn" class="small-btn">保存</button>
+            </div>
+        </div>
+        
+        <div class="controller-area">
+            <!-- タッチパッドエリア -->
+            <div class="touchpad-section">
+                <h3>タッチパッド</h3>
+                <div class="touchpad" id="touchpad">
+                    <div class="touchpad-cursor" id="cursor"></div>
+                    <div class="touchpad-instruction">タッチしてカーソルを移動</div>
+                </div>
+                <div class="cursor-info">
+                    <span>X: <span id="cursorX">0</span></span>
+                    <span>Y: <span id="cursorY">0</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>操作方法</h3>
+            <ul>
+                <li><strong>タッチパッド</strong>: 指でドラッグしてカーソル移動</li>
+                <li><strong>ダブルタップ</strong>: カーソル位置で斬る</li>
+                <li><strong>スワイプ</strong>: 素早くスワイプして斬る</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="controller.js"></script>
+</body>
+</html> 
