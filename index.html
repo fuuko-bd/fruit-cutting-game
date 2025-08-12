@@ -54,28 +54,27 @@
     </div>
     
     <script src="game.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
   (function () {
+    // 今アクセスしているドメインを自動取得
     const newUrl = window.location.origin + "/controller";
 
-    // QRエリアを作り直す（ここで初めて中身を入れる）
+    // QRコードを入れる箱
     const box = document.getElementById("qrCode");
     if (box) {
       box.innerHTML = `
         <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
-        <a id="qr-link" href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
+        <a href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
       `;
-      QRCode.toCanvas(document.getElementById("qr"), newUrl, { width: 240, margin: 1 }, e => e && console.error(e));
+      // QRコード生成
+      QRCode.toCanvas(document.getElementById("qr"), newUrl, {
+        width: 240,
+        margin: 1
+      });
     }
-
-    // 念のため、古い trycloudflare のリンクがあれば全部置換
-    document.querySelectorAll('a').forEach(a => {
-      if (a.href && a.href.includes('trycloudflare.com')) {
-        a.href = newUrl;
-        a.textContent = newUrl;
-      }
-    });
   })();
 </script>
     
