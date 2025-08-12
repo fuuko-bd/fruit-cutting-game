@@ -55,6 +55,28 @@
 </script>                
             </div>
         </div>
+
+    <script>
+  // 既存の trycloudflare リンクを強制的に新URLへ置換（保険）
+  (function(){
+    const newUrl = window.location.origin + "/controller";
+    // aタグを書き換え
+    document.querySelectorAll('a').forEach(a => {
+      if (a.href.includes('trycloudflare.com')) {
+        a.href = newUrl;
+        a.textContent = newUrl;
+      }
+    });
+    // QR用のimg/canvasを過去コードが作っていた場合に備え、テキストも念のため更新
+    const qrText = document.getElementById('qr-link');
+    if (qrText) {
+      qrText.textContent = newUrl;
+      qrText.href = newUrl;
+    }
+  })();
+</script>
+
+    
         
         <div id="gameOver" class="game-over hidden">
             <div class="game-over-content">
