@@ -27,54 +27,18 @@
                 <button id="resetBtn" class="btn btn-danger">リセット</button>
             </div>
 
-            <div class="qr-section">
+<div class="qr-section">
   <h3>スマホで参加</h3>
-  <div id="qrCode" class="qr-code">
-    <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
-    <a id="qr-link" href="#" style="display:block;margin-top:8px;font-size:14px;word-break:break-all"></a>
-  </div>
+  <!-- ← 箱だけ、1つだけ置く。中身（canvas/a）は入れない -->
+  <div id="qrCode" class="qr-code"></div>
   <p class="qr-instruction">スマホでQRコードを読み取って参加しよう！</p>
 </div>
-
-<!-- QR生成ライブラリ（CDN） -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script>
-  // 現在のURL + /controller に自動追従
-  const url = window.location.origin + "/controller";
-
-  // QRコード描画
-  const canvas = document.getElementById("qr");
-  QRCode.toCanvas(canvas, url, { width: 240, margin: 1 }, (err) => {
-    if (err) console.error(err);
-  });
-
-  // 文字リンクも表示（QR読み取り失敗時の保険）
-  const link = document.getElementById("qr-link");
-  link.textContent = url;
-  link.href = url;
-</script>                
+            
+            
             </div>
         </div>
 
-    <script>
-  // 既存の trycloudflare リンクを強制的に新URLへ置換（保険）
-  (function(){
-    const newUrl = window.location.origin + "/controller";
-    // aタグを書き換え
-    document.querySelectorAll('a').forEach(a => {
-      if (a.href.includes('trycloudflare.com')) {
-        a.href = newUrl;
-        a.textContent = newUrl;
-      }
-    });
-    // QR用のimg/canvasを過去コードが作っていた場合に備え、テキストも念のため更新
-    const qrText = document.getElementById('qr-link');
-    if (qrText) {
-      qrText.textContent = newUrl;
-      qrText.href = newUrl;
-    }
-  })();
-</script>
+
 
     
         
@@ -90,31 +54,31 @@
     </div>
     
     <script src="game.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
-  // ここで最終的に“全部”上書きする（他の古いコードの影響を打ち消す）
-  const newUrl = window.location.origin + "/controller";
+  (function () {
+    const newUrl = window.location.origin + "/controller";
 
-  // QRエリアをまるっと作り直す
-  const box = document.getElementById("qrCode");
-  if (box) {
-    box.innerHTML = `
-      <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
-      <a id="qr-link" href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
-    `;
-    const canvas = document.getElementById("qr");
-    QRCode.toCanvas(canvas, newUrl, { width: 240, margin: 1 }, (err) => err && console.error(err));
-  }
-
-  // 既存のaタグに古いURLが残っていたら強制置換
-  document.querySelectorAll('a').forEach(a => {
-    if (a.href && a.href.includes('trycloudflare.com')) {
-      a.href = newUrl;
-      a.textContent = newUrl;
+    // QRエリアを作り直す（ここで初めて中身を入れる）
+    const box = document.getElementById("qrCode");
+    if (box) {
+      box.innerHTML = `
+        <canvas id="qr" width="240" height="240" style="background:#fff;border-radius:12px"></canvas>
+        <a id="qr-link" href="${newUrl}" style="display:block;margin-top:8px;font-size:14px;word-break:break-all">${newUrl}</a>
+      `;
+      QRCode.toCanvas(document.getElementById("qr"), newUrl, { width: 240, margin: 1 }, e => e && console.error(e));
     }
-  });
+
+    // 念のため、古い trycloudflare のリンクがあれば全部置換
+    document.querySelectorAll('a').forEach(a => {
+      if (a.href && a.href.includes('trycloudflare.com')) {
+        a.href = newUrl;
+        a.textContent = newUrl;
+      }
+    });
+  })();
 </script>
+    
 
 
     
