@@ -28,7 +28,7 @@ class FruitCuttingGame {
         ];
         
         this.insects = ['🐞', '🐝', '🐛', '🕷️', '🦋', '🦗', '🦂', '🕸️'];
-        this.controllerJoinUrl = 'https://samuel-discounted-feb-fine.trycloudflare.com/controller';
+        this.controllerJoinUrl = window.location.origin + '/controller';
         
         this.init();
     }
@@ -41,7 +41,11 @@ class FruitCuttingGame {
     }
     
     setupSocket() {
-        this.socket = io();
+        this.socket = io(window.location.origin, {
+  transports: ['websocket', 'polling'],
+  timeout: 7000,
+  reconnectionAttempts: 5,
+});
         this.socket.on('connect', () => console.log('Connected to server'));
         
         this.socket.on('aim', ({ id, x, y, name }) => {
